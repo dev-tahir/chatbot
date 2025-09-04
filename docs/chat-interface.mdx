@@ -32,6 +32,35 @@ export default function YourComponent() {
 }
 ```
 
+## SDK Integration
+
+You can also interact with the chat backend programmatically using the provided SDK.
+
+For example, to send a message and receive an AI response:
+
+```typescript
+import { KiloCodeSDK } from '../sdk';
+
+const sdk = new KiloCodeSDK('http://localhost:3000');
+
+async function sendMessage() {
+  const response = await sdk.chat.sendMessage("Hello, AI!");
+  if (response) {
+    console.log("AI Response:", response.response);
+  } else {
+    console.error("Failed to get AI response.");
+  }
+}
+
+sendMessage();
+```
+
+> Make sure the `sdk` directory is added to your project and the API base URL matches your deployment.
+
 ## Customization
 
 The chat interface can be customized through props and CSS styling. See the component documentation for available options.
+
+---
+
+For more advanced usage such as user authentication, notification, and settings management, refer to the [SDK documentation](../sdk/README.md).
