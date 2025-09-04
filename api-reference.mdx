@@ -1,0 +1,75 @@
+```markdown
+# API Reference
+
+## Blog Posts API
+
+The Blog Posts API allows you to fetch a list of blog posts, including their title, content, and author information. Below is an overview of how this API is used in the application.
+
+### Endpoint
+
+```
+GET /api/blog
+```
+
+### Description
+
+Fetches all blog posts. The result is an array of post objects, each containing the following fields:
+
+- `id` (string): Unique identifier for the post.
+- `title` (string): The title of the blog post.
+- `content` (string | null): The main content of the post.
+- `author` (object):
+  - `name` (string | null): Name of the author.
+
+### Example Request
+
+```ts
+const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog`, {
+  cache: 'no-store', // Ensure data is always fresh
+});
+const posts = await res.json();
+```
+
+### Example Response
+
+```json
+[
+  {
+    "id": "abc123",
+    "title": "Welcome to the blog!",
+    "content": "This is our first post.",
+    "author": {
+      "name": "Alice"
+    }
+  },
+  {
+    "id": "def456",
+    "title": "Second Post",
+    "content": "Another interesting update.",
+    "author": {
+      "name": "Bob"
+    }
+  }
+]
+```
+
+### Error Handling
+
+If the API returns an error (e.g., network failure or non-2xx status), the application displays an error message:
+
+```tsx
+{error && (
+  <div>
+    <strong>Error:</strong> {error}
+  </div>
+)}
+```
+
+### UI Integration
+
+The posts are displayed in a responsive grid. Each post shows its title, content, and the author's name. If there are no posts, the message "No posts found." is displayed.
+
+---
+
+For further customization or advanced usage, refer to the relevant source code in `app/posts/page.tsx`.
+```
