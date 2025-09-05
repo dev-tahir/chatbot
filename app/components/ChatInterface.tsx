@@ -8,6 +8,7 @@ import DarkModeToggle from './DarkModeToggle'; // Import DarkModeToggle
 const router = useRouter();
 
 interface Message {
+  id: string;
   role: 'user' | 'bot';
   content: string;
   timestamp: number;
@@ -54,8 +55,9 @@ export default function ChatInterface() {
     e.preventDefault();
     if (!input.trim() || loading) return;
 
-    const userMessage: Message = { 
-      role: 'user', 
+    const userMessage: Message = {
+      id: Date.now().toString(), // Unique ID for the message
+      role: 'user',
       content: input.trim(),
       timestamp: Date.now()
     };
@@ -81,16 +83,18 @@ export default function ChatInterface() {
         throw new Error(data.error);
       }
 
-      const botMessage: Message = { 
-        role: 'bot', 
+      const botMessage: Message = {
+        id: Date.now().toString() + '-bot', // Unique ID for the bot message
+        role: 'bot',
         content: data.response,
         timestamp: Date.now()
       };
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
       console.error('Error:', error);
-      const errorMessage: Message = { 
-        role: 'bot', 
+      const errorMessage: Message = {
+        id: Date.now().toString() + '-error', // Unique ID for the error message
+        role: 'bot',
         content: 'Sorry, I encountered an error. Please try again.',
         timestamp: Date.now()
       };
@@ -121,6 +125,17 @@ export default function ChatInterface() {
     return new Date(timestamp).toLocaleTimeString([], { 
       hour: '2-digit', 
       minute: '2-digit' 
+    });
+  };
+
+  const deleteMessage = (id: string) => {
+    setMessages(prev => {
+      const updatedMessages = prev.filter(msg => msg.id !== id);
+      if (session?.user?.email) {
+        const storageKey = `gemini-chat-history-${session.user.email}`;
+        localStorage.setItem(storageKey, JSON.stringify(updatedMessages));
+      }
+      return updatedMessages;
     });
   };
 
@@ -255,11 +270,20 @@ export default function ChatInterface() {
                     {message.content}
                   </div>
                   <div
-                    className={`text-xs mt-2 ${
+                    className={`text-xs mt-2 flex items-center justify-between ${
                       message.role === 'user' ? 'text-blue-100' : 'text-gray-400 dark:text-gray-300'
                     }`}
                   >
                     {formatTime(message.timestamp)}
+                    {message.role === 'user' && (
+                      <button
+                        onClick={() => deleteMessage(message.id)}
+                        className="ml-2 text-blue-100 hover:text-red-300 dark:text-gray-400 dark:hover:text-red-400 transition-colors duration-200"
+                        title="Delete message"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
