@@ -1,0 +1,99 @@
+```markdown
+# Admin Panel
+
+The **Admin Panel** provides an interface for administrators to manage users and configure general settings for your Chatbot application.
+
+---
+
+## Overview
+
+The admin panel is accessible to authenticated admin users and consists of two main sections, accessible via tabs:
+
+- **User Dashboard**
+- **Settings**
+
+---
+
+## User Dashboard
+
+This tab allows you to manage and monitor registered users in your application.
+
+**Features:**
+
+- View a list of all users with details such as ID, name, and email.
+- (Depending on implementation, you may see functionality to edit user roles, remove users, or view user activity.)
+
+**Navigation:**
+
+When you open the Admin Panel, you land on the **User Dashboard** tab by default.
+
+---
+
+## Settings
+
+The **Settings** tab lets you configure general settings for the administration and operation of your site.
+
+**General Settings Include:**
+
+- **Site Title:** Set the display title for your website.
+- **Admin Email:** Configure the primary admin contact email.
+- **Items Per Page (Dashboard):** Set how many users are listed per page on the dashboard.
+
+Changes can be saved by clicking **Save Settings**.
+
+---
+
+## Navigating Between Tabs
+
+At the top of the Admin Panel, you'll find navigation tabs:
+
+- Click **User Dashboard** to view and manage users.
+- Click **Settings** to update general site and admin information.
+
+The active tab is highlighted for ease of use.
+
+---
+
+## Example UI
+
+<details>
+<summary>Sample Admin Panel Layout</summary>
+
+```plaintext
+--------------------------------------------------------------------------------
+| Admin Panel                                                                 |
+| -------------------------------------------------------------------------- |
+| [ User Dashboard ] [ Settings ]                                            |
+| -------------------------------------------------------------------------- |
+
+- When "User Dashboard" is active:
+    - List of users, with options to manage each user.
+
+- When "Settings" is active:
+    - General Settings
+        - Site Title      [_____________________]
+        - Admin Email     [_____________________]
+        - Items Per Page  [____10____]
+      [Save Settings]
+--------------------------------------------------------------------------------
+```
+
+</details>
+
+---
+
+## Access Control
+
+Only authenticated admin users can access the Admin Panel. If a user is not logged in, they will be redirected to the sign-in page.
+
+---
+
+## Notes
+
+- The admin panel UI uses modern React features, including state for tab switching.
+- Customization and extension are possible to suit your operational or business needs.
+
+---
+
+If you have any questions or issues with the Admin Panel, contact [support@example.com](mailto:support@example.com).
+```
