@@ -10,11 +10,13 @@ The chat interface is the main component of the application, providing real-time
 ## Features
 
 - Real-time message updates
-- Message history
+- Message history (persisted to local storage per user)
 - Typing indicators
 - Message status (sent, delivered, read)
 - File attachments support
 - Responsive design
+- **Unique message IDs** for all user and bot messages
+- **Message deletion:** Users can now delete their own messages from the chat history
 
 ## Usage
 
@@ -32,6 +34,64 @@ export default function YourComponent() {
 }
 ```
 
+## What's New
+
+**Message Deletion:**  
+Users can now delete any of their own sent messages. Hover over your user message to reveal a trash icon button. Clicking this button will remove the message from the chat and update your local message history.
+
+**Message IDs:**  
+Every message—both user and bot—now has a unique ID assigned to it. This makes it easier to identify, manage, or update specific messages.
+
 ## Customization
 
 The chat interface can be customized through props and CSS styling. See the component documentation for available options.
+
+## Implementation Notes
+
+- **Unique Message Identification:**  
+  Each message object now contains an `id` field, which is a unique string identifier generated at the time the message is created.
+
+    ```tsx
+    const userMessage: Message = {
+      id: Date.now().toString(), // Unique ID for the user message
+      role: 'user',
+      content: input.trim(),
+      timestamp: Date.now()
+    }
+    ```
+
+- **Message Deletion:**  
+  User messages can be deleted. When a user deletes a message, it is immediately removed from the list and from local storage if the user is authenticated.
+
+    ```tsx
+    const deleteMessage = (id: string) => {
+      setMessages(prev => {
+        const updatedMessages = prev.filter(msg => msg.id !== id);
+        // Update localStorage for logged in users
+        if (session?.user?.email) {
+          const storageKey = `gemini-chat-history-${session.user.email}`;
+          localStorage.setItem(storageKey, JSON.stringify(updatedMessages));
+        }
+        return updatedMessages;
+      });
+    };
+    ```
+
+- **Delete UI:**  
+  Only user messages will display a delete (trash) icon. This appears next to the message's timestamp, and removes only your own message when clicked.
+
+    ```tsx
+    {message.role === 'user' && (
+      <button onClick={() => deleteMessage(message.id)} title="Delete message">
+        <Trash2 className="w-3 h-3" />
+      </button>
+    )}
+    ```
+
+- **Persistence:**  
+  The chat history is stored in local storage per user for authenticated sessions.
+
+---
+
+**Need help?**  
+If you encounter any issues with the chat interface, please [contact support](mailto:support@example.com).
