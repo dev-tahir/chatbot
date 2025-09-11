@@ -1,0 +1,73 @@
+# .docsalot.yaml - Configuration file for docsalot documentation generation
+# This file allows you to specify which files and folders to ignore during documentation generation
+
+# List of files/folders/patterns to ignore
+ignore:
+  # Build and compiled directories
+  - "dist/"
+  - "build/"
+  - "out/"
+  - "node_modules/"
+  - ".next/"
+  - ".nuxt/"
+  - "__pycache__/"
+  - ".pytest_cache/"
+  - "coverage/"
+  
+  # Version control and IDE files
+  - ".git/"
+  - ".vscode/"
+  - ".idea/"
+  
+  # Test directories (if you don't want them in documentation)
+  - "tests/"
+  - "test/"
+  - "__tests__/"
+  
+  # Temporary and cache directories
+  - "tmp/"
+  - "temp/"
+  - ".cache/"
+  
+  # Lock files and dependencies
+  - "package-lock.json"
+  - "yarn.lock"
+  - "pnpm-lock.yaml"
+  - "poetry.lock"
+  - "Gemfile.lock"
+  - "composer.lock"
+  - "cargo.lock"
+  
+  # Environment and config files with sensitive data
+  - ".env"
+  - ".env.local"
+  - ".env.production"
+  - ".env.development"
+  
+  # Binary and media files
+  - "*.png"
+  - "*.jpg"
+  - "*.jpeg"
+  - "*.gif"
+  - "*.svg"
+  - "*.ico"
+  - "*.pdf"
+  - "*.zip"
+  - "*.tar.gz"
+  - "*.mp4"
+  - "*.mp3"
+  - "*.wav"
+
+# Specifically ignore folders (alternative way to specify folder patterns)
+ignoreFolders:
+  - "vendor"
+  - "logs"
+  - "documentation" # If you have existing docs you don't want processed
+
+# Specifically ignore individual files
+ignoreFiles:
+  - "README.md"
+  - "PRIVATE.md"
+  - "secret-config.json"
+
+# Note: The docsalot.yaml file itself is automatically excluded from documentation processing
