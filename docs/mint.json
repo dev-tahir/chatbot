@@ -31,7 +31,14 @@
     },
     {
       "group": "API Reference",
-      "pages": ["api-introduction", "api-authentication", "api-chat", "api-users"]
+      "pages": [
+        "api-introduction",
+        "api-authentication",
+        "api-chat",
+        "api-users",
+        "api-groups",
+        "api-teams"
+      ]
     }
   ]
 }
