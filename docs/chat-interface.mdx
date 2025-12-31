@@ -1,6 +1,6 @@
 ---
 title: 'Chat Interface'
-description: 'Learn about the chat interface component and its features'
+description: 'Learn about the chat interface component, its features and the new dark-mode toggle'
 ---
 
 # Chat Interface
@@ -15,6 +15,7 @@ The chat interface is the main component of the application, providing real-time
 - Message status (sent, delivered, read)
 - File attachments support
 - Responsive design
+- **Built-in dark-mode support with a theme toggle** <!-- NEW -->
 
 ## Usage
 
@@ -32,6 +33,35 @@ export default function YourComponent() {
 }
 ```
 
+### Enabling Dark Mode <!-- NEW -->
+
+Dark mode is powered by `next-themes` and Tailwind CSS’ `dark` variant:
+
+1. A `ThemeProvider` is wrapped around the application in `app/layout.tsx`.
+2. Tailwind is configured with `darkMode: 'class'` in `tailwind.config.js`.
+3. The chat interface contains dark-aware utility classes (e.g. `dark:bg-gray-800`).
+4. A reusable `DarkModeToggle` component (located at `app/components/DarkModeToggle.tsx`) switches between light and dark themes.
+
+If you embed the `ChatInterface` outside the default layout, make sure to:
+
+```tsx
+import { ThemeProvider } from 'next-themes';
+
+<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+  <ChatInterface />
+</ThemeProvider>
+```
+
+Optionally render the toggle anywhere in your UI:
+
+```tsx
+import DarkModeToggle from '@/components/DarkModeToggle';
+
+<DarkModeToggle />
+```
+
 ## Customization
 
-The chat interface can be customized through props and CSS styling. See the component documentation for available options.
+The chat interface can be customized through props and CSS styling. With the new dark-mode implementation, you can further tailor colors by extending Tailwind’s theme in `tailwind.config.js` or by adding additional `dark:` utility classes where needed.
+
+For a complete list of available props and customization hooks, see the component source code.
