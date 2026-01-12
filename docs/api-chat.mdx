@@ -1,0 +1,78 @@
+```markdown
+# Chat API
+
+The Chat API allows you to send messages to the AI and receive responses. This endpoint is central to powering conversational experiences in your application.
+
+## Endpoint
+
+```
+POST /api/chat
+```
+
+## Request
+
+| Field       | Type   | Required | Description                              |
+|-------------|--------|----------|------------------------------------------|
+| message     | string | Yes      | The message to send to the AI.           |
+| conversationId | string | No   | Optional ID for keeping a conversation thread. |
+
+### Example Request
+
+```json
+{
+  "message": "Hello, how are you?",
+  "conversationId": "abc123" // optional
+}
+```
+
+## Response
+
+| Field       | Type   | Description                         |
+|-------------|--------|-------------------------------------|
+| response    | string | AI's response to the message.       |
+| conversationId | string | The ID for the conversation, useful for threading and context retention. |
+
+### Example Response
+
+```json
+{
+  "response": "I'm good! How can I assist you today?",
+  "conversationId": "abc123"
+}
+```
+
+## Errors
+
+- `400`: Missing or invalid input properties.
+- `401`: Unauthorized. Token missing, expired or invalid.
+- `500`: Internal server error.
+
+## SDK Usage Example
+
+If you're using the KiloCode SDK, you can access this functionality as follows:
+
+```typescript
+import { KiloCodeSDK } from './sdk'; // adjust the import path as needed
+
+const sdk = new KiloCodeSDK('http://localhost:3000'); // use your API base URL
+
+async function chatWithAI() {
+  const userMessage = "Hello, how are you?";
+  const response = await sdk.chat.sendMessage(userMessage, "abc123"); // conversationId is optional
+  if (response) {
+    console.log('AI says:', response.response);
+  } else {
+    console.error('Failed to get AI response.');
+  }
+}
+
+chatWithAI();
+```
+
+## Notes
+
+- Use the same `conversationId` for sequential messages if you want the AI to remember previous messages in the conversation.
+- For stateless interactions, omit the `conversationId`.
+
+---
+```
