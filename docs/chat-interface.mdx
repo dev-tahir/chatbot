@@ -15,6 +15,7 @@ The chat interface is the main component of the application, providing real-time
 - Message status (sent, delivered, read)
 - File attachments support
 - Responsive design
+- **Dark mode support** (toggle with a button in the header)
 
 ## Usage
 
@@ -35,3 +36,49 @@ export default function YourComponent() {
 ## Customization
 
 The chat interface can be customized through props and CSS styling. See the component documentation for available options.
+
+### Dark Mode
+
+Starting from version `0.4.6` and above, the chat interface supports dark mode using the [`next-themes`](https://github.com/pacocoursey/next-themes) library and Tailwind CSS's `dark:` variant. A dark mode toggle button is available in the chat header, letting users easily switch between light and dark themes.
+
+To enable and customize dark mode:
+
+1. **ThemeProvider Setup:**  
+   Make sure your root layout wraps your content with the `ThemeProvider` from `next-themes`:
+
+   ```tsx
+   import { ThemeProvider } from 'next-themes';
+
+   export default function RootLayout({ children }) {
+     return (
+       <html>
+         <body>
+           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+             {children}
+           </ThemeProvider>
+         </body>
+       </html>
+     );
+   }
+   ```
+
+2. **Tailwind Configuration:**  
+   Ensure your `tailwind.config.js` enables dark mode using the `'class'` strategy:
+
+   ```js
+   // tailwind.config.js
+   module.exports = {
+     darkMode: 'class',
+     // ...rest of config
+   }
+   ```
+
+3. **DarkModeToggle Component:**  
+   The component includes a dark mode toggle button (`app/components/DarkModeToggle.tsx`), which is shown in the chat interface header. You don't need to do anything extra—it's already integrated!
+
+4. **Custom Styles:**  
+   You can further customize colors and themes via your Tailwind configuration and by extending the component styles using the `dark:` prefix.
+
+---
+
+For more details, review the source code of `ChatInterface.tsx` and `DarkModeToggle.tsx`.
