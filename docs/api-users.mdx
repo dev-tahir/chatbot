@@ -1,0 +1,158 @@
+```markdown
+# Users API
+
+This page documents the Users API endpoints and SDK interface, which allow you to fetch user information, user statistics, and manage user profiles.
+
+---
+
+## SDK Interfaces
+
+The Users API consists of two main modules in the SDK:
+
+- `stats`: For retrieving aggregate user statistics.
+- `profile`: For managing individual user profiles.
+
+### Types
+
+```ts
+export interface UserStats {
+  totalUsers: number;
+  activeUsers: number;
+  recentUsers: number;
+  timestamp: string;
+}
+
+export interface UserProfile {
+  id: string;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+  // Add other profile fields as needed
+}
+```
+
+---
+
+## Usage Examples
+
+### 1. Fetch User Statistics
+
+Retrieve aggregate user statistics such as total, active, and recent users.
+
+```ts
+const stats = await sdk.stats.getStats();
+if (stats) {
+  console.log('User Stats:', stats);
+} else {
+  console.log('Failed to get user stats.');
+}
+```
+
+**Example Output:**
+```
+User Stats: {
+  totalUsers: 1000,
+  activeUsers: 120,
+  recentUsers: 10,
+  timestamp: '2024-06-01T12:34:56Z'
+}
+```
+
+### 2. Get and Update User Profile
+
+You can retrieve and update a user's profile as follows:
+
+```ts
+const userId = 'user123'; // Replace with a valid user ID
+
+// Get user profile
+const profile = await sdk.profile.getProfile(userId);
+if (profile) {
+  console.log('User Profile:', profile);
+} else {
+  console.log('Failed to get user profile.');
+}
+
+// Update user profile
+const updatedProfile = await sdk.profile.updateProfile(userId, { name: 'Jane Doe' });
+if (updatedProfile) {
+  console.log('Updated User Profile:', updatedProfile);
+} else {
+  console.log('Failed to update user profile.');
+}
+```
+
+---
+
+## SDK Reference
+
+### stats.getStats()
+
+- **Description:** Fetches aggregated user statistics.
+- **Returns:** `Promise<UserStats | null>`
+
+### profile.getProfile(userId: string)
+
+- **Description:** Fetches a user's profile by user ID.
+- **Returns:** `Promise<UserProfile | null>`
+
+### profile.updateProfile(userId: string, data: Partial<UserProfile>) 
+
+- **Description:** Updates a user's profile.
+- **Returns:** `Promise<UserProfile | null>`
+
+---
+
+## Example
+
+Here is a complete example demonstrating the user stats and profile use cases:
+
+```ts
+// User Stats Example
+async function runStatsExample() {
+  console.log('\n--- User Stats Example ---');
+  const stats = await sdk.stats.getStats();
+  if (stats) {
+    console.log('User Stats:', stats);
+  } else {
+    console.log('Failed to get user stats.');
+  }
+}
+
+// User Profile Example
+async function runProfileExample() {
+  console.log('\n--- User Profile Example ---');
+  const testUserId = 'user123'; // Replace with a valid user ID
+
+  // Get user profile
+  const profile = await sdk.profile.getProfile(testUserId);
+  if (profile) {
+    console.log('User Profile:', profile);
+  } else {
+    console.log('Failed to get user profile.');
+  }
+
+  // Update user profile
+  const updatedProfile = await sdk.profile.updateProfile(testUserId, { name: 'Jane Doe' });
+  if (updatedProfile) {
+    console.log('Updated User Profile:', updatedProfile);
+  } else {
+    console.log('Failed to update user profile.');
+  }
+}
+
+// Example calls
+runStatsExample();
+runProfileExample();
+```
+
+---
+
+## API Endpoints
+
+_Note: The exact HTTP endpoints for user statistics and profile management will depend on your backend API design. The SDK wraps these HTTP calls for you._
+
+---
+
+For any further questions, [contact support](mailto:support@example.com).
+```
